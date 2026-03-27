@@ -56,6 +56,12 @@
     border-bottom: 1px solid rgba(255,69,0,0.2);
   }
 
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
   .logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.8rem;
@@ -64,6 +70,74 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .logo-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--fire);
+    color: var(--flame);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.6rem;
+    transition: all 0.2s;
+  }
+
+  .logo-audio-btn:hover {
+    color: #000;
+    background: linear-gradient(135deg, var(--fire), var(--flame));
+    border-color: transparent;
+  }
+
+  .audio-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 300;
+  }
+
+  .audio-modal.show { display: flex; }
+
+  .audio-modal-card {
+    width: min(760px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card);
+    border: 1px solid rgba(255,69,0,0.35);
+    padding: 1.25rem;
+    position: relative;
+  }
+
+  .audio-modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    border: 1px solid var(--border);
+    background: #0b0b0b;
+    color: var(--text);
+    padding: 0.35rem 0.55rem;
+    cursor: pointer;
+  }
+
+  .audio-modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    letter-spacing: 1px;
+    margin-bottom: 0.35rem;
+  }
+
+  .audio-modal-sub {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
   }
 
   nav ul {
@@ -690,7 +764,10 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">🐉 Detailing Dragons</div>
+  <div class="nav-left">
+    <div class="logo">🐉 Detailing Dragons</div>
+    <a href="#" id="audioModalTrigger" class="logo-audio-btn">ads-dragon-audio.html</a>
+  </div>
   <ul>
     <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
@@ -1018,6 +1095,60 @@
     📸 @detailingdragons_kharkhoda
   </a>
 </footer>
+
+<div id="audioModal" class="audio-modal" role="dialog" aria-modal="true" aria-labelledby="audioModalTitle">
+  <div class="audio-modal-card">
+    <button id="audioModalClose" class="audio-modal-close" type="button" aria-label="Close">X</button>
+    <h3 id="audioModalTitle" class="audio-modal-title">ADS Dragon Audio</h3>
+    <p class="audio-modal-sub">Premium car audio upgrades with clean installation and punchy tuning.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img">🔊</div>
+        <div class="product-badge">ADS Dragon Audio</div>
+        <div class="product-body">
+          <div class="product-name">Speaker Upgrades</div>
+          <div class="product-desc">Component and coaxial speakers for powerful clarity and bass response.</div>
+          <a href="https://wa.me/917027082169?text=Hi!%20I%20want%20speaker%20upgrade%20options%20for%20ADS%20Dragon%20Audio." target="_blank" class="product-cta">Enquire on WhatsApp</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎛️</div>
+        <div class="product-badge">ADS Dragon Audio</div>
+        <div class="product-body">
+          <div class="product-name">Amplifiers and Wiring</div>
+          <div class="product-desc">Neat and safe wiring, fuse protection, and clean multi-channel amplification.</div>
+          <a href="https://wa.me/917027082169?text=Hi!%20I%20want%20amplifier%20and%20wiring%20setup%20for%20ADS%20Dragon%20Audio." target="_blank" class="product-cta">Enquire on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const audioModal = document.getElementById('audioModal');
+  const audioModalTrigger = document.getElementById('audioModalTrigger');
+  const audioModalClose = document.getElementById('audioModalClose');
+
+  audioModalTrigger.addEventListener('click', function (event) {
+    event.preventDefault();
+    audioModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeAudioModal() {
+    audioModal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  audioModalClose.addEventListener('click', closeAudioModal);
+  audioModal.addEventListener('click', function (event) {
+    if (event.target === audioModal) closeAudioModal();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && audioModal.classList.contains('show')) closeAudioModal();
+  });
+</script>
 
 </body>
 </html>
